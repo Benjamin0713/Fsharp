@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "5/oN4d4i447CAct6k+Oio96dorbn9vqusoaA6ebg16aPk1O0939YurH+sp3uDzBUvqOkzBQNEZ1/XpVbTJk5EA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Benjamin\\Desktop\\作业\\编译原理\\大作业\\Fsharp\\interpc.fsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Benjamin\\.nuget\\packages\\fsharp.core\\6.0.4\\fsharp.core.6.0.4.nupkg.sha512",
+    "C:\\Users\\Benjamin\\.nuget\\packages\\fslexyacc\\10.2.0\\fslexyacc.10.2.0.nupkg.sha512",
+    "C:\\Users\\Benjamin\\.nuget\\packages\\fslexyacc.runtime\\10.2.0\\fslexyacc.runtime.10.2.0.nupkg.sha512"
+  ],
+  "logs": []
+}
