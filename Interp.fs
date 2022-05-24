@@ -305,6 +305,22 @@ and eval e locEnv gloEnv store : int * store =
         let (loc, store1) = access acc locEnv gloEnv store
         let (res, store2) = eval e locEnv gloEnv store1
         (res, setSto store2 loc res)
+    | PreInc acc -> //++i
+        let (loc,store1) as res = access acc locEnv gloEnv store //取要求的acc的地址和环境
+        let res = getSto store1 loc //得到要求的这个acc在store1的loc位置上的值
+        (res + 1, setSto store1 loc (res + 1)) //把值加一后set到store中，元组左边返回的就是这个加一后的值
+    | PreDec acc -> //--i
+        let (loc,store1) as res = access acc locEnv gloEnv store
+        let res = getSto store1 loc
+        (res - 1, setSto store1 loc (res - 1))
+    | NextInc acc -> //i++
+        let (loc,store1) as res = access acc locEnv gloEnv store
+        let res = getSto store1 loc
+        (res, setSto store1 loc (res + 1))//先返回再加1
+    | NextDec acc -> //i--
+        let (loc,store1) as res = access acc locEnv gloEnv store
+        let res = getSto store1 loc
+        (res, setSto store1 loc (res - 1))
     | CstI i -> (i, store)
     | Addr acc -> access acc locEnv gloEnv store
     | Prim1 (ope, e1) ->

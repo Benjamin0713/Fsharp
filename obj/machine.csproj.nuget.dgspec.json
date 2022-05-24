@@ -1,0 +1,60 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Benjamin\\Desktop\\作业\\编译原理\\大作业\\Fsharp\\machine.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Benjamin\\Desktop\\作业\\编译原理\\大作业\\Fsharp\\machine.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Benjamin\\Desktop\\作业\\编译原理\\大作业\\Fsharp\\machine.csproj",
+        "projectName": "machine",
+        "projectPath": "C:\\Users\\Benjamin\\Desktop\\作业\\编译原理\\大作业\\Fsharp\\machine.csproj",
+        "packagesPath": "C:\\Users\\Benjamin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Benjamin\\Desktop\\作业\\编译原理\\大作业\\Fsharp\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Benjamin\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://nuget.cdn.azure.cn/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

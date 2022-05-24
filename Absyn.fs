@@ -18,7 +18,12 @@ type typ =
                                                                    
 and expr =                           // 表达式，右值                                                
   | Access of access                 (* x    or  *p    or  a[e]     *) //访问左值（右值）
+  | PreInc of access                 (* 自增 ++x or ++a[i]*)
+  | PreDec of access                 (* 自减--x or --a[i]*)
+  | NextInc of access                  (*x++ or a[i]--*)
+  | NextDec of access                  (*x-- or a[i]--*)
   | Assign of access * expr          (* x=e  or  *p=e  or  a[e]=e   *)
+  | AssignOpt of string * access * expr (* 简单的赋值操作+=\-=\*=\\=*)
   | Addr of access                   (* &x   or  &*p   or  &a[e]    *)
   | CstI of int                      (* Constant                    *)
   | Prim1 of string * expr           (* Unary primitive operator    *)

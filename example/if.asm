@@ -22,19 +22,6 @@ asm_main:
 	pop rcx
 	pop rdx ;pop asm_main args
 	; allocate globals:
-	;INCSP 1
-	lea rsp, [rsp-8*(1)]
-	;INCSP 3
-	lea rsp, [rsp-8*(3)]
-	;GETSP
-	push rsp
-	;OFFSET 2
-	push -16
-	;SUB
-	pop r10
-	pop rax
-	sub rax,r10
-	push rax
 	
 ldargs:           ;set up command line arguments on stack:
 	mov rcx, rcx
@@ -78,41 +65,6 @@ _L1_main_pro_2:
 	sub rbp, 8 ; rbp pointer to first arg 
 	mov [rbp+16], rax ; set retaddr 
 	mov [rbp+8], r10  ; set oldbp
-	;GVAR 4
-	mov rax ,qword [glovars]
-	sub rax , 4*8
-	push rax
-	;LDI
-	pop rax
-	mov rax,[rax]
-	push rax
-	;CSTI 0
-	push 0
-	;CSTI -8
-	push -8
-	;MUL
-	pop rax
-	pop r10
-	imul r10
-	push rax
-	;ADD
-	pop rax
-	pop r10
-	add rax, r10
-	push rax
-	;CSTI 1
-	push 1
-	;STI
-	pop r10
-	pop rax
-	mov [rax],r10
-	push r10
-	;INCSP -1
-	lea rsp, [rsp-8*(-1)]
-	;GOTO L3
-	jmp L3
-	
-L2:
 	;GETBP
 	push rbp
 	;OFFSET 0
@@ -126,6 +78,24 @@ L2:
 	pop rax
 	mov rax,[rax]
 	push rax
+	;CSTI 8
+	push 8
+	;EQ
+	pop rax
+	pop r10
+	cmp rax, r10
+	jne .Lasm0
+	push 1
+	jmp .Lasm1
+.Lasm0:
+	push 0
+.Lasm1:
+	;IFZERO L2
+	pop rax
+	cmp rax,0
+	je L2
+	;CSTI 1
+	push 1
 	;PRINTI
 	pop rcx
 	push rcx
@@ -134,91 +104,26 @@ L2:
 	add rsp, 16
 	;INCSP -1
 	lea rsp, [rsp-8*(-1)]
-	;GETBP
-	push rbp
-	;OFFSET 0
-	push -0
-	;ADD
-	pop rax
-	pop r10
-	add rax, r10
-	push rax
-	;GETBP
-	push rbp
-	;OFFSET 0
-	push -0
-	;ADD
-	pop rax
-	pop r10
-	add rax, r10
-	push rax
-	;LDI
-	pop rax
-	mov rax,[rax]
-	push rax
-	;CSTI 1
-	push 1
-	;SUB
-	pop r10
-	pop rax
-	sub rax,r10
-	push rax
-	;STI
-	pop r10
-	pop rax
-	mov [rax],r10
-	push r10
+	;INCSP 0
+	lea rsp, [rsp-8*(0)]
+	;GOTO L3
+	jmp L3
+	
+L2:
+	;CSTI 0
+	push 0
+	;PRINTI
+	pop rcx
+	push rcx
+	sub rsp, 16
+	call printi
+	add rsp, 16
 	;INCSP -1
 	lea rsp, [rsp-8*(-1)]
 	;INCSP 0
 	lea rsp, [rsp-8*(0)]
 	
 L3:
-	;GETBP
-	push rbp
-	;OFFSET 0
-	push -0
-	;ADD
-	pop rax
-	pop r10
-	add rax, r10
-	push rax
-	;LDI
-	pop rax
-	mov rax,[rax]
-	push rax
-	;CSTI 0
-	push 0
-	;SWAP
-	pop rax
-	pop r10
-	push rax
-	push r10
-	;LT
-	pop rax
-	pop r10
-	cmp r10, rax
-	jl .Lasm0
-	push 0
-	jmp .Lasm1
-.Lasm0:
-	push 1
-.Lasm1:
-	;IFNZRO L2
-	pop rax
-	cmp rax,0
-	jne L2
-	;CSTI 10
-	push 10
-	;PRINTC
-	
-                    pop rcx
-	push rcx
-	sub rsp, 16
-	call printc
-	add rsp, 16
-	;INCSP -1
-	lea rsp, [rsp-8*(-1)]
 	;INCSP 0
 	lea rsp, [rsp-8*(0)]
 	;RET 0
