@@ -38,6 +38,13 @@ type token =
   | RETURN
   | VOID
   | WHILE
+  | PLUSSEMI
+  | MINUSSEMI
+  | TIMESSEMI
+  | DIVSEMI
+  | MODSEMI
+  | WENHAO
+  | MAOHAO
   | CSTSTRING of (string)
   | NAME of (string)
   | CSTINT of (int)
@@ -80,6 +87,13 @@ type tokenId =
     | TOKEN_RETURN
     | TOKEN_VOID
     | TOKEN_WHILE
+    | TOKEN_PLUSSEMI
+    | TOKEN_MINUSSEMI
+    | TOKEN_TIMESSEMI
+    | TOKEN_DIVSEMI
+    | TOKEN_MODSEMI
+    | TOKEN_WENHAO
+    | TOKEN_MAOHAO
     | TOKEN_CSTSTRING
     | TOKEN_NAME
     | TOKEN_CSTINT

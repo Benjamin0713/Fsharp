@@ -69,6 +69,13 @@ rule Token = parse          // 每个 规则rule 会生成为一个函数，函�
   | '/'             { DIV } 
   | "++"            { SELFADD } //自增
   | "--"            { SELFMINUS } //自减
+  | '?'             { WENHAO }  //问号
+  | ':'             { WENHAO }  //冒号
+  | "+="            { PLUSSEMI } //+=
+  | "-="            { MINUSSEMI } //-=
+  | "*="            { TIMESSEMI } //*=
+  | "/="            { DIVSEMI }   ///=
+  | "%="            { MODSEMI }   //%=
   | '%'             { MOD }                     
   | '='             { ASSIGN } 
   | "=="            { EQ } 

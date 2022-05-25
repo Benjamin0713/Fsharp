@@ -16,7 +16,8 @@ let nl = CstI 10 //  \n 的 ASCII 码
 
 %token <int> CSTINT CSTBOOL  // <int> 是词元的语义值类型
 %token <string> CSTSTRING NAME
-
+%token WENHAO MAOHAO //三目运算符
+%token PLUSSEMI MINUSSEMI TIMESSEMI DIVSEMI MODSEMI //赋值语句
 %token CHAR ELSE IF INT NULL PRINT PRINTLN RETURN VOID WHILE
 %token PLUS MINUS TIMES DIV MOD SELFADD SELFMINUS
 %token EQ NE GT LT GE LE
@@ -32,7 +33,9 @@ let nl = CstI 10 //  \n 的 ASCII 码
 %nonassoc GT LT GE LE
 %left PLUS MINUS
 %left TIMES DIV MOD 
-%nonassoc NOT AMP SELFADD SELFMINUS
+%left PLUSSEMI MINUSSEMI TIMESSEMI DIVSEMI SELFADD SELFMINUS MODSEMI
+%left WENHAO MAOHAO
+%nonassoc NOT AMP 
 %nonassoc LBRACK          /* highest precedence  */
 
 %start Main            // 语法开始符号
@@ -158,6 +161,11 @@ ExprNotAccess:
   | SELFMINUS Access                    { PreDec $2 } //--i
   | Access SELFADD                      { NextInc $1 } //i++
   | Access SELFMINUS                    { NextDec $1 } //i--
+  | Access PLUSSEMI Expr                { AssignOpt("+=", $1, $3)} //赋值语句
+  | Access MINUSSEMI Expr               { AssignOpt("-=", $1, $3)}
+  | Access TIMESSEMI Expr               { AssignOpt("*=", $1, $3)}
+  | Access DIVSEMI Expr                 { AssignOpt("/=", $1, $3)}
+  | Access MODSEMI Expr                 { AssignOpt("%=", $1, $3)}
   | Access ASSIGN Expr                  { Assign($1, $3)      } // $1为左值
   | NAME LPAR Exprs RPAR                { Call($1, $3)        }  
   | NOT Expr                            { Prim1("!", $2)      }
@@ -174,6 +182,7 @@ ExprNotAccess:
   | Expr LT    Expr                     { Prim2("<",  $1, $3) }
   | Expr GE    Expr                     { Prim2(">=", $1, $3) }
   | Expr LE    Expr                     { Prim2("<=", $1, $3) }
+  | Expr WENHAO Expr MAOHAO Expr        { Prim3($1, $3, $5)   } //三目运算
   | Expr SEQAND Expr                    { Andalso($1, $3)     }
   | Expr SEQOR  Expr                    { Orelse($1, $3)      }
 ;
