@@ -256,7 +256,7 @@ and Token  lexbuf =
           )
   | 11 -> ( 
 # 73 "CLex.fsl"
-                                     WENHAO 
+                                     MAOHAO 
 # 260 "CLex.fs"
           )
   | 12 -> ( 
