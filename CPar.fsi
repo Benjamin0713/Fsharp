@@ -38,6 +38,7 @@ type token =
   | RETURN
   | VOID
   | WHILE
+  | FLOAT
   | PLUSSEMI
   | MINUSSEMI
   | TIMESSEMI
@@ -45,6 +46,7 @@ type token =
   | MODSEMI
   | WENHAO
   | MAOHAO
+  | CSTFLOAT of (float32)
   | CSTSTRING of (string)
   | NAME of (string)
   | CSTINT of (int)
@@ -87,6 +89,7 @@ type tokenId =
     | TOKEN_RETURN
     | TOKEN_VOID
     | TOKEN_WHILE
+    | TOKEN_FLOAT
     | TOKEN_PLUSSEMI
     | TOKEN_MINUSSEMI
     | TOKEN_TIMESSEMI
@@ -94,6 +97,7 @@ type tokenId =
     | TOKEN_MODSEMI
     | TOKEN_WENHAO
     | TOKEN_MAOHAO
+    | TOKEN_CSTFLOAT
     | TOKEN_CSTSTRING
     | TOKEN_NAME
     | TOKEN_CSTINT
@@ -122,6 +126,7 @@ type nonTerminalId =
     | NONTERM_Exprs
     | NONTERM_Exprs1
     | NONTERM_Const
+    | NONTERM_ConstFloat
     | NONTERM_Type
 /// This function maps tokens to integer indexes
 val tagOfToken: token -> int

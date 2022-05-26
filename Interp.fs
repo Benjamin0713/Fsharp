@@ -322,6 +322,10 @@ and eval e locEnv gloEnv store : int * store =
         let res = getSto store1 loc
         (res, setSto store1 loc (res - 1))
     | CstI i -> (i, store)
+    | CstF f ->
+        let bytes = System.BitConverter.GetBytes(float32(f))
+        let v = System.BitConverter.ToInt32(bytes, 0)
+        (v, store)
     | Addr acc -> access acc locEnv gloEnv store
     | Prim1 (ope, e1) ->
         let (i1, store1) = eval e1 locEnv gloEnv store
