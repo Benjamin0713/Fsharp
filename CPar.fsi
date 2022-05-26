@@ -44,6 +44,9 @@ type token =
   | TIMESSEMI
   | DIVSEMI
   | MODSEMI
+  | MAX
+  | MIN
+  | ABS
   | WENHAO
   | MAOHAO
   | CSTFLOAT of (float32)
@@ -95,6 +98,9 @@ type tokenId =
     | TOKEN_TIMESSEMI
     | TOKEN_DIVSEMI
     | TOKEN_MODSEMI
+    | TOKEN_MAX
+    | TOKEN_MIN
+    | TOKEN_ABS
     | TOKEN_WENHAO
     | TOKEN_MAOHAO
     | TOKEN_CSTFLOAT

@@ -23,6 +23,9 @@ let keyword s =
     | "if"      -> IF
     | "int"     -> INT
     | "float"   -> FLOAT    //float
+    | "Max"     -> MAX      //max函数
+    | "Min"     -> MIN      //min函数
+    | "Abs"     -> ABS      //abs函数
     | "null"    -> NULL
     | "print"   -> PRINT
     | "println" -> PRINTLN

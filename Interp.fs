@@ -382,6 +382,23 @@ and eval e locEnv gloEnv store : int * store =
             | "%="  -> i1 % i2
             | _ -> failwith ("unknown primitive " + ope)
         (res, setSto store2 loc res)
+    //Max函数
+    | Max (e1, e2) ->
+        let (i1, store1) = eval e1 locEnv gloEnv store
+        let (i2, store2) = eval e2 locEnv gloEnv store1
+        let res = (if i1 > i2 then i1 else i2)
+        (res, store2)
+    //Min函数
+    | Min (e1, e2) ->
+        let (i1, store1) = eval e1 locEnv gloEnv store
+        let (i2, store2) = eval e2 locEnv gloEnv store1
+        let res = (if i1 < i2 then i1 else i2)
+        (res, store2)
+    //Abs函数
+    | Abs (e1) ->
+        let (i1, store1) = eval e1 locEnv gloEnv store
+        (abs(i1), store1)
+    
     | Andalso (e1, e2) ->
         let (i1, store1) as res = eval e1 locEnv gloEnv store
 
