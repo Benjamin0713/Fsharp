@@ -55,13 +55,13 @@
 <MyItem Include="example\ex23.c" />
 <MyItem Include="example\ex24.c" />
 <MyItem Include="example\ex25.c" /> -->
- <!-- <MyItem Include="example\emptymain.c" Args ="8"/>  -->
+ <MyItem Include="myexample\myex6.c" /> 
  <!-- <MyItem Include="example\global.c" Args ="8"/>  -->
  <!-- <MyItem Include="example\variable.c" Args ="8"/>  -->
  <!-- <MyItem Include="example\array.c" Args ="8"/>  -->
  <!-- <MyItem Include="example\onearg.c" Args ="8"/>  -->
  <!-- <MyItem Include="example\assign.c" Args ="8"/>  -->
- <MyItem Include="example\if.c" Args ="8"/> 
+ <!-- <MyItem Include="example\if.c" Args ="8"/>  -->
  <!-- <MyItem Include="example\while.c" Args ="8"/>  -->
  <!-- <MyItem Include="example\pointer.c" Args ="8"/>  -->
  <!-- <MyItem Include="example\expr.c" Args ="8"/>  -->
