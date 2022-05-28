@@ -1,18 +1,13 @@
-void main() {
-    int i;
-    i=1;
-    i++;
-    print i;
-    i--;
-    print i;
-    i+=2;
-    print i;
-    i-=2;
-    print i;
-    i*=2;
-    print i;
-    i/=2;
-    print i;
-    i%=2;
-    print i;
+void main(int n) { //复合赋值
+    print n;
+    n += 2;
+    print n;
+    n -= 2;
+    print n;
+    n *= 2;
+    print n;
+    n /= 2;
+    print n;
+    n %= 2;
+    print n;
 }

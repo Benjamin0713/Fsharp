@@ -232,6 +232,18 @@ and cExpr (e: expr) (varEnv: VarEnv) (funEnv: FunEnv) : instr list =
     //i--
     | NextDec acc -> cAccess acc varEnv funEnv @ [DUP;LDI;SWAP;DUP;LDI;CSTI 1;SUB;STI;INCSP -1]
 
+    | AssignOpt (op, acc, e) -> //复合赋值
+        cAccess acc varEnv funEnv
+            @ [DUP] @ [LDI] @ cExpr e varEnv funEnv
+                @ (match op with
+                    | "+=" -> [ADD;STI]
+                    | "-=" -> [SUB;STI]
+                    | "*=" -> [MUL;STI]
+                    | "/=" -> [DIV;STI]
+                    | "%=" -> [MOD;STI]
+                    |_ -> raise (Failure "could not fine operation")
+                )
+
     | Access acc -> cAccess acc varEnv funEnv @ [ LDI ]
     | Assign (acc, e) ->
         cAccess acc varEnv funEnv
