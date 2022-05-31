@@ -40,6 +40,8 @@ type token =
   | WHILE
   | FLOAT
   | FOR
+  | DO
+  | UNTIL
   | PLUSSEMI
   | MINUSSEMI
   | TIMESSEMI
@@ -95,6 +97,8 @@ type tokenId =
     | TOKEN_WHILE
     | TOKEN_FLOAT
     | TOKEN_FOR
+    | TOKEN_DO
+    | TOKEN_UNTIL
     | TOKEN_PLUSSEMI
     | TOKEN_MINUSSEMI
     | TOKEN_TIMESSEMI

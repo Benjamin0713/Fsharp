@@ -1,4 +1,4 @@
-void main() {
+void main() { //注释修改
     int i ;
     i = 5;
     (*i = 10;*)
