@@ -284,6 +284,24 @@ and cExpr (e: expr) (varEnv: VarEnv) (funEnv: FunEnv) : instr list =
             @ [ GOTO labend ]
                 @ [ Label labelse ]
                 @ cExpr e3 varEnv funEnv @ [ Label labend ]
+    //最大值函数
+    | Max(e1, e2) ->
+        let labtrue = newLabel()
+        let labend = newLabel()
+        cExpr e1 varEnv funEnv  
+            @ cExpr e2 varEnv funEnv @ [LT] @ [IFNZRO labtrue]
+                @ cExpr e1 varEnv funEnv  
+                    @ [GOTO labend; Label labtrue] 
+                        @ cExpr e2 varEnv funEnv @ [Label labend]
+    //最小值函数
+    | Min(e1, e2) ->
+        let labtrue = newLabel()
+        let labend = newLabel()
+        cExpr e1 varEnv funEnv 
+            @ cExpr e2 varEnv funEnv @ [LT] @ [IFNZRO labtrue]
+                @ cExpr e2 varEnv funEnv  
+                    @ [GOTO labend; Label labtrue] 
+                        @ cExpr e1 varEnv funEnv @ [Label labend]
     
     | Andalso (e1, e2) ->
         let labend = newLabel ()
