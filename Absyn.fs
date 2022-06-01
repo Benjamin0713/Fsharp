@@ -16,6 +16,7 @@ type typ =
   | TypA of typ * int option         (* Array type                  *)
   | TypP of typ                      (* Pointer type                *)
   | TypF                             (* Type float *)
+  | TypB                             (* Type bool *)
                                                                    
 and expr =                           // 表达式，右值                                                
   | Access of access                 (* x    or  *p    or  a[e]     *) //访问左值（右值）
@@ -56,6 +57,7 @@ and stmt =
 
 and stmtordec =                                                    
   | Dec of typ * string              (* Local variable declaration  *)
+  | DecAndAssign of typ * string * expr (* 变量申明并赋值      *)
   | Stmt of stmt                     (* A statement                 *)
 
 // 顶级声明 可以是函数声明或变量声明

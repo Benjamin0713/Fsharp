@@ -12,9 +12,15 @@ type token =
   | COMMA
   | ASSIGN
   | AMP
+  | BITNOT
+  | BITXOR
+  | BITOR
   | NOT
   | SEQOR
   | SEQAND
+  | BITLEFT
+  | BITRIGHT
+  | BOOL
   | EQ
   | NE
   | GT
@@ -69,9 +75,15 @@ type tokenId =
     | TOKEN_COMMA
     | TOKEN_ASSIGN
     | TOKEN_AMP
+    | TOKEN_BITNOT
+    | TOKEN_BITXOR
+    | TOKEN_BITOR
     | TOKEN_NOT
     | TOKEN_SEQOR
     | TOKEN_SEQAND
+    | TOKEN_BITLEFT
+    | TOKEN_BITRIGHT
+    | TOKEN_BOOL
     | TOKEN_EQ
     | TOKEN_NE
     | TOKEN_GT

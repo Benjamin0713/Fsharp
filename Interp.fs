@@ -322,6 +322,11 @@ and stmtordec stmtordec locEnv gloEnv store =
     match stmtordec with
     | Stmt stmt -> (locEnv, exec stmt locEnv gloEnv store)
     | Dec (typ, x) -> allocate (typ, x) locEnv store
+    | DecAndAssign(typ, x,e) -> 
+        let (locEnv1, store1) = allocate (typ, x) locEnv store
+        // let (res, store2) = eval e locEnv1 gloEnv store1
+        let (res, store2) = eval (Assign(AccVar x, e)) locEnv1 gloEnv store1
+        (locEnv1, store2)
 
 (* Evaluating micro-C expressions *)
 
@@ -368,6 +373,7 @@ and eval e locEnv gloEnv store : int * store =
             | "printc" ->
                 (printf "%c" (char i1)
                  i1)
+            | "~" -> ~~~i1
             | _ -> failwith ("unknown primitive " + ope)
 
         (res, store1)
@@ -388,6 +394,11 @@ and eval e locEnv gloEnv store : int * store =
             | "<=" -> if i1 <= i2 then 1 else 0
             | ">=" -> if i1 >= i2 then 1 else 0
             | ">" -> if i1 > i2 then 1 else 0
+            | "&" -> i1 &&& i2
+            | "|" -> i1 ||| i2
+            | "^" -> i1 ^^^ i2
+            | "<<" -> i1 <<< i2
+            | ">>" -> i1 >>> i2
             | _ -> failwith ("unknown primitive " + ope)
 
         (res, store2)

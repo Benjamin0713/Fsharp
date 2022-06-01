@@ -186,6 +186,28 @@ let rec cStmt stmt (varEnv: VarEnv) (funEnv: FunEnv) : instr list =
         @ cStmt body varEnv funEnv
           @ [ Label labtest ]
             @ cExpr e varEnv funEnv @ [ IFNZRO labbegin ]
+    //dowhile循环
+    | DoWhile(body, e) ->
+      let labbegin = newLabel()
+      let labtest  = newLabel()
+      cStmt body varEnv funEnv @ [GOTO labtest; Label labbegin] @ cStmt body varEnv funEnv
+      @ [Label labtest] @ cExpr e varEnv funEnv @ [IFNZRO labbegin]
+    // //dountil循环
+    // | DoUntil(body, e) ->
+    //   let labbegin = newLabel()
+    //   let labtest  = newLabel()
+    //   cStmt body varEnv funEnv @ [GOTO labtest; Label labbegin] @ cStmt body varEnv funEnv
+    //   @ [Label labtest] @ cExpr e varEnv funEnv @ [IFNZRO labbegin]
+    //for循环
+    | For(e1, e2, e3, body) ->         
+      let labbegin = newLabel()
+      let labtest  = newLabel()
+
+      cExpr e1 varEnv funEnv @ [INCSP -1]
+      @ [GOTO labtest; Label labbegin] @ cStmt body varEnv funEnv
+      @ cExpr e3 varEnv funEnv @ [INCSP -1]
+      @ [Label labtest] @ cExpr e2 varEnv funEnv @ [IFNZRO labbegin]
+
     | Expr e -> cExpr e varEnv funEnv @ [ INCSP -1 ]
     | Block stmts ->
 
@@ -208,6 +230,10 @@ and cStmtOrDec stmtOrDec (varEnv: VarEnv) (funEnv: FunEnv) : VarEnv * instr list
     match stmtOrDec with
     | Stmt stmt -> (varEnv, cStmt stmt varEnv funEnv)
     | Dec (typ, x) -> allocateWithMsg Locvar (typ, x) varEnv
+    | DecAndAssign (typ, x, e) -> //变量初始换赋值
+        let (varEnv1, code) = allocateWithMsg Locvar (typ, x) varEnv
+        let code2 = cExpr(Assign (AccVar x, e))  varEnv1 funEnv
+        (varEnv1, code @ code2 @ [INCSP -1])
 
 (* Compiling micro-C expressions:
 

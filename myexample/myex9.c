@@ -1,4 +1,4 @@
-void main(int n ) {
+void main(int n ) {//dowhile循环
    int i ;
    i = 0;
    do {
