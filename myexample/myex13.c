@@ -1,4 +1,4 @@
-void main() { //二进制左移右移操作
+void main() { //位运算
 	int a;
 	int b;
 	int c;

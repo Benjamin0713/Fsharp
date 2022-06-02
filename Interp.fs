@@ -356,7 +356,7 @@ and eval e locEnv gloEnv store : int * store =
         let res = getSto store1 loc
         (res, setSto store1 loc (res - 1))
     | CstI i -> (i, store)
-    | CstF f ->
+    | CstF f -> //float变量定义
         let bytes = System.BitConverter.GetBytes(float32(f))
         let v = System.BitConverter.ToInt32(bytes, 0)
         (v, store)
@@ -373,7 +373,7 @@ and eval e locEnv gloEnv store : int * store =
             | "printc" ->
                 (printf "%c" (char i1)
                  i1)
-            | "~" -> ~~~i1
+            | "~" -> ~~~i1 //~非
             | _ -> failwith ("unknown primitive " + ope)
 
         (res, store1)
@@ -394,11 +394,11 @@ and eval e locEnv gloEnv store : int * store =
             | "<=" -> if i1 <= i2 then 1 else 0
             | ">=" -> if i1 >= i2 then 1 else 0
             | ">" -> if i1 > i2 then 1 else 0
-            | "&" -> i1 &&& i2
-            | "|" -> i1 ||| i2
-            | "^" -> i1 ^^^ i2
-            | "<<" -> i1 <<< i2
-            | ">>" -> i1 >>> i2
+            | "&" -> i1 &&& i2 //&与
+            | "|" -> i1 ||| i2 //|或
+            | "^" -> i1 ^^^ i2 //^异或
+            | "<<" -> i1 <<< i2 //<<左移
+            | ">>" -> i1 >>> i2 //>>右移
             | _ -> failwith ("unknown primitive " + ope)
 
         (res, store2)
@@ -459,7 +459,7 @@ and access acc locEnv gloEnv store : int * store =
     match acc with
     | AccVar x -> (lookup (fst locEnv) x, store)
     | AccDeref e -> eval e locEnv gloEnv store
-    | AccIndex (acc, idx) ->
+    | AccIndex (acc, idx) -> //变量初始化并赋初值（非全局）
         let (a, store1) = access acc locEnv gloEnv store
         let aval = getSto store1 a
         let (i, store2) = eval idx locEnv gloEnv store1
