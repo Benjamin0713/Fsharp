@@ -289,108 +289,7 @@ let rec exec stmt (locEnv: locEnv) (gloEnv: gloEnv) (store: store) : store =
             else 
                 store2    
         loop (exec body locEnv gloEnv store)
-    //for循环实现
-    | For(e1, e2, e3, body) ->                    
-      let (v, store1) = eval e1 locEnv gloEnv store
-      let rec loop store1 =
-              let (v, store2) = eval e2 locEnv gloEnv store1
-              if v<>0 then loop (snd (eval e3 locEnv gloEnv (exec body locEnv gloEnv store2)))
-                      else store2
-      loop store1
-    //dowhile循环
-    | DoWhile (body, e) ->
-    // do{
-    //     i++;
-    //     print i;
-    // }while(i<n)
-        let rec loop store1 =
-            //求值 循环条件,注意变更环境 store
-            let (v, store2) = eval e locEnv gloEnv store1
-            // 继续循环
-            if v <> 0 then
-                loop (exec body locEnv gloEnv store2)
-            else
-                store2 //退出循环返回 环境store2
 
-        loop (exec body locEnv gloEnv store)  // 先执行一遍body
-
-    //dountil循环
-    | DoUntil(body,e) -> 
-        let rec loop store1 =
-            let (v, store2) = eval e locEnv gloEnv  store1
-            if v = 0 then //判断添加为假 v=0
-                loop (exec body locEnv gloEnv store2)
-            else 
-                store2    
-        loop (exec body locEnv gloEnv store)
-        //for循环实现
-    | For(e1, e2, e3, body) ->                    
-      let (v, store1) = eval e1 locEnv gloEnv store
-      let rec loop store1 =
-              let (v, store2) = eval e2 locEnv gloEnv store1
-              if v<>0 then loop (snd (eval e3 locEnv gloEnv (exec body locEnv gloEnv store2)))
-                      else store2
-      loop store1
-    //dowhile循环
-    | DoWhile (body, e) ->
-    // do{
-    //     i++;
-    //     print i;
-    // }while(i<n)
-        let rec loop store1 =
-            //求值 循环条件,注意变更环境 store
-            let (v, store2) = eval e locEnv gloEnv store1
-            // 继续循环
-            if v <> 0 then
-                loop (exec body locEnv gloEnv store2)
-            else
-                store2 //退出循环返回 环境store2
-
-        loop (exec body locEnv gloEnv store)  // 先执行一遍body
-
-    //dountil循环
-    | DoUntil(body,e) -> 
-        let rec loop store1 =
-            let (v, store2) = eval e locEnv gloEnv  store1
-            if v = 0 then //判断添加为假 v=0
-                loop (exec body locEnv gloEnv store2)
-            else 
-                store2    
-        loop (exec body locEnv gloEnv store)
-        //for循环实现
-    | For(e1, e2, e3, body) ->                    
-      let (v, store1) = eval e1 locEnv gloEnv store
-      let rec loop store1 =
-              let (v, store2) = eval e2 locEnv gloEnv store1
-              if v<>0 then loop (snd (eval e3 locEnv gloEnv (exec body locEnv gloEnv store2)))
-                      else store2
-      loop store1
-    //dowhile循环
-    | DoWhile (body, e) ->
-    // do{
-    //     i++;
-    //     print i;
-    // }while(i<n)
-        let rec loop store1 =
-            //求值 循环条件,注意变更环境 store
-            let (v, store2) = eval e locEnv gloEnv store1
-            // 继续循环
-            if v <> 0 then
-                loop (exec body locEnv gloEnv store2)
-            else
-                store2 //退出循环返回 环境store2
-
-        loop (exec body locEnv gloEnv store)  // 先执行一遍body
-
-    //dountil循环
-    | DoUntil(body,e) -> 
-        let rec loop store1 =
-            let (v, store2) = eval e locEnv gloEnv  store1
-            if v = 0 then //判断添加为假 v=0
-                loop (exec body locEnv gloEnv store2)
-            else 
-                store2    
-        loop (exec body locEnv gloEnv store)
     | While (e, body) -> 
         // while(i<n){
         //     print i;
@@ -406,7 +305,58 @@ let rec exec stmt (locEnv: locEnv) (gloEnv: gloEnv) (store: store) : store =
                 store2 //退出循环返回 环境store2
 
         loop store
+    | Switch (e,body) ->  
+                let (res, store0) = eval e locEnv gloEnv store
+                let rec loop store1 controlStat = 
+                    match controlStat with
+                    | Some(Break)           -> (store1, None)          // 如果有遇到的break，结束该次循环并清除break标记
+                    | Some(Return _)        -> (store1, controlStat)   // 如果有未跳出的函数，
+                    | _                     ->                         // continue或者没有设置控制状态时，先检查条件然后继续运行
+                        let rec pick list =
+                            match list with
+                            | Case(e1,body1) :: tail -> 
+                                let (res2, store2) = eval e1 locEnv gloEnv store1
+                                if res2=res then exec body1 locEnv gloEnv store2 None
+                                            else pick tail
+                            | [] -> (store1,None)
+                            | Default( body1 ) :: tail -> 
+                                let (res3,store3) = exec body1 locEnv gloEnv store1 None
+                                pick tail
+                        (pick body)
+                loop store0 controlStat
+    | Case (e,body) -> exec body locEnv gloEnv store controlStat
+    // | Switch(e,body) ->  
+    //           let (res, store1) = eval e locEnv gloEnv store
+    //           let rec choose list =
+    //             match list with
+    //             | Case(e1,body1) :: tail -> 
+    //                 let (res2, store2) = eval e1 locEnv gloEnv store1
+    //                 if res2=res then eval e1 locEnv gloEnv store1
+    //                 else choose tail
+    //             | [] -> (res,store1)
+    //             | Default( body1 ) :: tail -> 
+    //                 let(res3,store3) = exec body1 locEnv gloEnv store1 None
+    //                 choose tail
+    //           (choose body)
+    // | Case(e,body) -> exec body locEnv gloEnv store controlStat
+    | Block stmts ->
 
+        // 语句块 解释辅助函数 loop
+        let rec loop ss (locEnv, store,(controlStat:controlStat)) =
+            if controlStat.IsSome then
+                let stat = controlStat.Value in
+                    match stat with
+                        | Break
+                        | Continue  -> (store, controlStat)
+                        | Return x  -> (store, controlStat)
+            else
+                 match ss with
+                        | [] -> (store, None)
+                        //语句块,解释 第1条语句s1
+                        // 调用loop 用变更后的环境 解释后面的语句 sr.
+                        | s1 :: sr -> loop sr (stmtordec s1 locEnv gloEnv store controlStat)
+                   
+        loop stmts (locEnv, store, controlStat)
     | Expr e ->
         // _ 表示丢弃e的值,返回 变更后的环境store1
         let (_, store1) = eval e locEnv gloEnv store

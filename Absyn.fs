@@ -38,26 +38,6 @@ and expr =                           // 表达式，右值
   | Max of expr * expr               (* Max 求两个值之间最大的那个 *)
   | Min of expr * expr               (* Min 求两个值之间最小的那个 *)
   | Abs of expr                      (* Abs 求绝对值 *)
-  and expr =                           // 表达式，右值                                                
-  | Access of access                 (* x    or  *p    or  a[e]     *) //访问左值（右值）
-  | PreInc of access                 (* 自增 ++x or ++a[i]*)
-  | PreDec of access                 (* 自减--x or --a[i]*)
-  | NextInc of access                (*x++ or a[i]--*)
-  | NextDec of access                (*x-- or a[i]--*)
-  | Assign of access * expr          (* x=e  or  *p=e  or  a[e]=e   *)
-  | AssignOpt of string * access * expr (* 简单的赋值操作+=\-=\*=\\=*)
-  | Addr of access                   (* &x   or  &*p   or  &a[e]    *)
-  | CstI of int                      (* Constant                    *)
-  | CstF of float32                  (* Constant float*)
-  | Prim1 of string * expr           (* Unary primitive operator    *)  (* ~*)
-  | Prim2 of string * expr * expr    (* Binary primitive operator   *) (* 位操作*)
-  | Prim3 of expr * expr * expr      (*三目运算符                    *)
-  | Andalso of expr * expr           (* Sequential and              *)
-  | Orelse of expr * expr            (* Sequential or               *)
-  | Call of string * expr list       (* Function call f(...)        *)
-  | Max of expr * expr               (* Max 求两个值之间最大的那个 *)
-  | Min of expr * expr               (* Min 求两个值之间最小的那个 *)
-  | Abs of expr                      (* Abs 求绝对值 *)
                                                                    
 and access =                         //左值，存储的位置                                            
   | AccVar of string                 (* Variable access        x    *) 
