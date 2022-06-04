@@ -289,7 +289,108 @@ let rec exec stmt (locEnv: locEnv) (gloEnv: gloEnv) (store: store) : store =
             else 
                 store2    
         loop (exec body locEnv gloEnv store)
+    //for循环实现
+    | For(e1, e2, e3, body) ->                    
+      let (v, store1) = eval e1 locEnv gloEnv store
+      let rec loop store1 =
+              let (v, store2) = eval e2 locEnv gloEnv store1
+              if v<>0 then loop (snd (eval e3 locEnv gloEnv (exec body locEnv gloEnv store2)))
+                      else store2
+      loop store1
+    //dowhile循环
+    | DoWhile (body, e) ->
+    // do{
+    //     i++;
+    //     print i;
+    // }while(i<n)
+        let rec loop store1 =
+            //求值 循环条件,注意变更环境 store
+            let (v, store2) = eval e locEnv gloEnv store1
+            // 继续循环
+            if v <> 0 then
+                loop (exec body locEnv gloEnv store2)
+            else
+                store2 //退出循环返回 环境store2
 
+        loop (exec body locEnv gloEnv store)  // 先执行一遍body
+
+    //dountil循环
+    | DoUntil(body,e) -> 
+        let rec loop store1 =
+            let (v, store2) = eval e locEnv gloEnv  store1
+            if v = 0 then //判断添加为假 v=0
+                loop (exec body locEnv gloEnv store2)
+            else 
+                store2    
+        loop (exec body locEnv gloEnv store)
+        //for循环实现
+    | For(e1, e2, e3, body) ->                    
+      let (v, store1) = eval e1 locEnv gloEnv store
+      let rec loop store1 =
+              let (v, store2) = eval e2 locEnv gloEnv store1
+              if v<>0 then loop (snd (eval e3 locEnv gloEnv (exec body locEnv gloEnv store2)))
+                      else store2
+      loop store1
+    //dowhile循环
+    | DoWhile (body, e) ->
+    // do{
+    //     i++;
+    //     print i;
+    // }while(i<n)
+        let rec loop store1 =
+            //求值 循环条件,注意变更环境 store
+            let (v, store2) = eval e locEnv gloEnv store1
+            // 继续循环
+            if v <> 0 then
+                loop (exec body locEnv gloEnv store2)
+            else
+                store2 //退出循环返回 环境store2
+
+        loop (exec body locEnv gloEnv store)  // 先执行一遍body
+
+    //dountil循环
+    | DoUntil(body,e) -> 
+        let rec loop store1 =
+            let (v, store2) = eval e locEnv gloEnv  store1
+            if v = 0 then //判断添加为假 v=0
+                loop (exec body locEnv gloEnv store2)
+            else 
+                store2    
+        loop (exec body locEnv gloEnv store)
+        //for循环实现
+    | For(e1, e2, e3, body) ->                    
+      let (v, store1) = eval e1 locEnv gloEnv store
+      let rec loop store1 =
+              let (v, store2) = eval e2 locEnv gloEnv store1
+              if v<>0 then loop (snd (eval e3 locEnv gloEnv (exec body locEnv gloEnv store2)))
+                      else store2
+      loop store1
+    //dowhile循环
+    | DoWhile (body, e) ->
+    // do{
+    //     i++;
+    //     print i;
+    // }while(i<n)
+        let rec loop store1 =
+            //求值 循环条件,注意变更环境 store
+            let (v, store2) = eval e locEnv gloEnv store1
+            // 继续循环
+            if v <> 0 then
+                loop (exec body locEnv gloEnv store2)
+            else
+                store2 //退出循环返回 环境store2
+
+        loop (exec body locEnv gloEnv store)  // 先执行一遍body
+
+    //dountil循环
+    | DoUntil(body,e) -> 
+        let rec loop store1 =
+            let (v, store2) = eval e locEnv gloEnv  store1
+            if v = 0 then //判断添加为假 v=0
+                loop (exec body locEnv gloEnv store2)
+            else 
+                store2    
+        loop (exec body locEnv gloEnv store)
     | While (e, body) -> 
         // while(i<n){
         //     print i;
