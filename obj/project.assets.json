@@ -230,9 +230,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Benjamin\\Desktop\\作业\\编译原理\\大作业\\Fsharp\\interpc.fsproj",
-      "projectName": "interpc",
-      "projectPath": "C:\\Users\\Benjamin\\Desktop\\作业\\编译原理\\大作业\\Fsharp\\interpc.fsproj",
+      "projectUniqueName": "C:\\Users\\Benjamin\\Desktop\\作业\\编译原理\\大作业\\Fsharp\\microc.fsproj",
+      "projectName": "microc",
+      "projectPath": "C:\\Users\\Benjamin\\Desktop\\作业\\编译原理\\大作业\\Fsharp\\microc.fsproj",
       "packagesPath": "C:\\Users\\Benjamin\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Benjamin\\Desktop\\作业\\编译原理\\大作业\\Fsharp\\obj\\",
       "projectStyle": "PackageReference",
